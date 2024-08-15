@@ -1,17 +1,22 @@
 html {
   margin: 0 auto;
+
 }
 
 :root{
-  max-width: 800px;
+  max-width: 900px;
   background-color: #1C1C1C;
   margin: 50px auto;
 }
 
+#root {
+  margin: 0 50px;
+}
+
 .App {
+  max-width: 800px;
   text-align: center;
   background-color: #F5F7FB;
-  
   display: flex;
   justify-content: center;
   align-items: center;
@@ -31,17 +36,15 @@ html {
   left: 0px;
 }
 
-.App-content {
-  max-width: 600px;
-}
-
 .btn {
   width: 90%;
 }
 
 .App-content{
-  width: 600px;
+  max-width: 700px;
   margin: 50px 0;
+  z-index: 2;
+  margin: 30px 30px;
 }
 
 .main-menu > .title{
@@ -86,6 +89,13 @@ svg{
   padding: 3px 17px;
   margin-right: 10px;
   font-size: 15px;
+  vertical-align: middle;
+}
+
+.answer:hover {
+  background-color: #c3cbf6;
+  border-color: #c3cbf6;
+  cursor: pointer;
 }
 
 .button { 
@@ -100,6 +110,11 @@ svg{
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   margin: 13px 10px 4px 30px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #37426c;
 }
 
 .score-button {
@@ -120,8 +135,25 @@ svg{
   background-color: #F8BCBC;
   border-color: #F8BCBC;
 }
+
 .true {
   background-color: #94D7A2;
   opacity: 1 !important;
   border-color: #94D7A2;
+}
+
+.loader {
+  position: absolute;
+  border: 20px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  /* animation: spin 2s linear infinite; */
+  z-index: 3;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -1,54 +1,50 @@
-function Game(){
+import React from "react";
+import { nanoid } from "nanoid";
+
+function Game(props){
+    const [answers, setAnswers] = React.useState(combineAnswer(props.incorrect_answers, props.correct_answer))
+    const [selectedAnswer, setSelectedAnswer] = React.useState()
+
+    const correctAnswer = props.correct_answer
+    const answerElem = answers.map(answer => <div className="answer" key={nanoid()}>{answer}</div>)
+    console.log(correctAnswer)
+    function removeCharacters(question) {
+        return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
+    }
+
+    function combineAnswer(incorrectAnswers, correctAnswer) {
+        let allAnswers = []
+        incorrectAnswers.map(answer => allAnswers.push({
+            answer: removeCharacters(answer),
+            active: false
+        }))
+        allAnswers.push({
+            answer: removeCharacters(correctAnswer),
+            active: false
+        })
+        // console.log(allAnswers)
+
+        // incorrectAnswers.map(answer => allAnswers.push(answer))
+        // allAnswers.push(correctAnswer)
+        // incorrectAnswers.map((item) => {
+        //     item.incorrect_answers.map((incorrectAnswer) => {
+        //         allAnswers.push(incorrectAnswer)
+        //     });
+        // });
+        return allAnswers
+    }
+
+
     return (
-        <div className="App-content">
-            <div className="question">
-                <h1>How would you say goodbye in Spannish?</h1>
-                <div className="answers">
-                    <div className="answer active">Adios</div>
-                    <div className="answer">Hola</div>
-                    <div className="answer">Au Revoir</div>
-                    <div className="answer">Salir</div>
-                </div>
-            </div>
-            <div className="question">
-                <h1>Which best selling toy of 1983 caused hysteria, resulting in riots breaking in stores?</h1>
-                <div className="answers">
-                    <div className="answer active">Cabbage Patch Kids</div>
-                    <div className="answer">Transformers</div>
-                    <div className="answer">Care Bears</div>
-                    <div className="answer">Rubik's Cube</div>
-                </div>
-            </div>
-            <div className="question">
-                <h1>What is the hottest planet in our Solar System?</h1>
-                <div className="answers">
-                    <div className="answer">Mercury</div>
-                    <div className="answer active">Venus</div>
-                    <div className="answer">Mars</div>
-                    <div className="answer">Saturn</div>
-                </div>
-            </div>
-            <div className="question">
-                <h1>In which country was the caesar salad invented?</h1>
-                <div className="answers">
-                    <div className="answer false opacity">Italy</div>
-                    <div className="answer opacity">Portugal</div>
-                    <div className="answer true">Mexico</div>
-                    <div className="answer opacity">France</div>
-                </div>
-            </div>
-            <div className="question">
-                <h1>How Many Hearts Does An Octopus Have?</h1>
-                <div className="answers">
-                    <div className="answer opacity">One</div>
-                    <div className="answer opacity">Two</div>
-                    <div className="answer true">Three</div>
-                    <div className="answer opacity">Four</div>
-                </div>
-            </div>
-            <div className="score-button">
-                <h3>You scored 3/5 correct answers</h3>
-                <button className="button">Check Answer</button>
+        <div className="question">
+            <h1>{removeCharacters(props.question)}</h1>
+            <div className="answers">
+                {answerElem}
+                {/* {combineAnswer(props.incorrect_answers, props.correct_answer)}
+                <div className="answer">Adios</div>
+                <div className="answer">Hola</div>
+                <div className="answer">Au Revoir</div>
+                <div className="answer">Salir</div> */}
             </div>
         </div>
     )
