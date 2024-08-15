@@ -6,8 +6,8 @@ function Game(props){
     const [selectedAnswer, setSelectedAnswer] = React.useState()
 
     const correctAnswer = props.correct_answer
-    const answerElem = answers.map(answer => <div className="answer" key={nanoid()}>{answer}</div>)
-    console.log(correctAnswer)
+    const answerElem = answers.map(data => <div className={`answer ${data.active ? 'active' : ''}`} key={nanoid()} onClick={() => selectAnswer(data.answer)}>{data.answer}</div>)
+
     function removeCharacters(question) {
         return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
     }
@@ -22,6 +22,7 @@ function Game(props){
             answer: removeCharacters(correctAnswer),
             active: false
         })
+        allAnswers.sort(() => Math.random() - 0.5);
         // console.log(allAnswers)
 
         // incorrectAnswers.map(answer => allAnswers.push(answer))
@@ -34,6 +35,11 @@ function Game(props){
         return allAnswers
     }
 
+    function selectAnswer(selected) {
+        answers.map(answer => selected === answer.answer ? answer.active = true : answer.active = false)
+        setAnswers([...answers])
+        console.log(answers)
+    }
 
     return (
         <div className="question">
