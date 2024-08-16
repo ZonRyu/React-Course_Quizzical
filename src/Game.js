@@ -5,8 +5,20 @@ function Game(props){
     const [answers, setAnswers] = React.useState(combineAnswer(props.incorrect_answers, props.correct_answer))
     const [selectedAnswer, setSelectedAnswer] = React.useState()
 
+    const [answerTrue, setAnswerTrue] = React.useState(false)
     const correctAnswer = props.correct_answer
-    const answerElem = answers.map(data => <div className={`answer ${data.active ? 'active' : ''}`} key={nanoid()} onClick={() => selectAnswer(data.answer)}>{data.answer}</div>)
+    const answerElem = answers.map(data => <div className={`answer ${data.active ? 'true' : ''}`} key={nanoid()} onClick={() => selectAnswer(data.answer)}>{data.answer}</div>)
+
+    React.useEffect(() => {
+        let score = JSON.parse(localStorage.getItem('score'))
+        if(answerTrue) {
+            localStorage.setItem('score', JSON.stringify(score + 1))
+            setAnswerTrue(true)
+        }else{
+            localStorage.setItem('score', JSON.stringify(score - 1))
+            setAnswerTrue(false)
+        }
+    }, [answerTrue])
 
     function removeCharacters(question) {
         return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
@@ -23,21 +35,14 @@ function Game(props){
             active: false
         })
         allAnswers.sort(() => Math.random() - 0.5);
-        // console.log(allAnswers)
-
-        // incorrectAnswers.map(answer => allAnswers.push(answer))
-        // allAnswers.push(correctAnswer)
-        // incorrectAnswers.map((item) => {
-        //     item.incorrect_answers.map((incorrectAnswer) => {
-        //         allAnswers.push(incorrectAnswer)
-        //     });
-        // });
         return allAnswers
     }
 
     function selectAnswer(selected) {
         answers.map(answer => selected === answer.answer ? answer.active = true : answer.active = false)
+        selected === correctAnswer ? setAnswerTrue(true) : setAnswerTrue(false)
         setAnswers([...answers])
+        setSelectedAnswer(selected)
         console.log(answers)
     }
 
@@ -46,11 +51,6 @@ function Game(props){
             <h1>{removeCharacters(props.question)}</h1>
             <div className="answers">
                 {answerElem}
-                {/* {combineAnswer(props.incorrect_answers, props.correct_answer)}
-                <div className="answer">Adios</div>
-                <div className="answer">Hola</div>
-                <div className="answer">Au Revoir</div>
-                <div className="answer">Salir</div> */}
             </div>
         </div>
     )

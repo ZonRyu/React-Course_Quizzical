@@ -127,8 +127,10 @@ svg{
   border-color: #D6DBF5;
 }
 
-.opacity {
+.answered {
   opacity: 0.5;
+  cursor: default !important;
+  pointer-events: none;
 }
 
 .false {
@@ -138,7 +140,6 @@ svg{
 
 .true {
   background-color: #94D7A2;
-  opacity: 1 !important;
   border-color: #94D7A2;
 }
 
