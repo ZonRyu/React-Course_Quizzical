@@ -127,18 +127,13 @@ svg{
   border-color: #D6DBF5;
 }
 
-.answered {
-  opacity: 0.5;
-  cursor: default !important;
-  pointer-events: none;
-}
-
 .false {
   background-color: #F8BCBC;
   border-color: #F8BCBC;
 }
 
 .true {
+  opacity: 1 !important;
   background-color: #94D7A2;
   border-color: #94D7A2;
 }

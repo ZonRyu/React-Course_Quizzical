@@ -25,7 +25,7 @@ function App() {
 
   const gameElem = (
     <>
-      {dataQuestion.map(data => <Game key={data.id} {...data} func={checkAnswer}/>)}
+      {dataQuestion.map(data => <Game key={data.id} {...data} func={checkAnswer} complete={complete} />)}
       <div className="score-button">
           {complete && <h3>You scored {score}/5 correct answers</h3>}
           <button className="button" onClick={() => checkAnswer(complete)}>{complete ? 'Play Again' : 'Check answers'}</button>
@@ -49,11 +49,10 @@ function App() {
   React.useEffect(() => {
     setScore(JSON.parse(localStorage.getItem('score')))
     localStorage.setItem('score', JSON.stringify(5))
+    if(!complete) {
+      getTriviaData()
+    }
   }, [complete])
-  
-  React.useEffect(() => {
-    getTriviaData()
-  }, [])
 
   async function getTriviaData() {
     //Set loading boolean to true so that we know to show loading text
@@ -98,7 +97,7 @@ function App() {
     <div className="App">
       {svgTr}
       {svgBl}
-      <div className='App-content' style={menu ? menuStyle : null}>
+      <div className='App-content' style={menu || loading ? menuStyle : null}>
         {loading ? <h1 className='loader'></h1> :
           menu ? 
             <MainMenu toggleGame={toggleGame} /> : gameElem}

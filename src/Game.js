@@ -6,8 +6,24 @@ function Game(props){
     const [selectedAnswer, setSelectedAnswer] = React.useState()
 
     const [answerTrue, setAnswerTrue] = React.useState(false)
+    const complete = props.complete
     const correctAnswer = props.correct_answer
-    const answerElem = answers.map(data => <div className={`answer ${data.active ? 'true' : ''}`} key={nanoid()} onClick={() => selectAnswer(data.answer)}>{data.answer}</div>)
+
+    const answeredStyle = {
+        opacity: '0.5',
+        cursor: 'default !important',
+        pointerEvents: 'none'
+    }
+
+    const answerElem = answers.map(data => complete ? 
+        <div className={`answer ${data.answer === correctAnswer ? 'true' : ''} ${selectedAnswer === correctAnswer && data.active ? 'true' : data.active ? 'false' : ''}`} style={answeredStyle} key={nanoid()}>
+            {data.answer}
+        </div>
+        :
+        <div className={`answer ${data.active ? 'active' : ''}`} key={nanoid()} onClick={() => selectAnswer(data.answer)}>
+            {data.answer}
+        </div>
+    )
 
     React.useEffect(() => {
         let score = JSON.parse(localStorage.getItem('score'))
@@ -43,7 +59,6 @@ function Game(props){
         selected === correctAnswer ? setAnswerTrue(true) : setAnswerTrue(false)
         setAnswers([...answers])
         setSelectedAnswer(selected)
-        console.log(answers)
     }
 
     return (
