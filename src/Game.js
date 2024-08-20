@@ -1,5 +1,6 @@
 import React from "react";
 import { nanoid } from "nanoid";
+import { decode } from "html-entities";
 
 function Game(props){
     const [answers, setAnswers] = React.useState(combineAnswer(props.incorrect_answers, props.correct_answer))
@@ -7,7 +8,7 @@ function Game(props){
 
     const [answerTrue, setAnswerTrue] = React.useState(false)
     const complete = props.complete
-    const correctAnswer = props.correct_answer
+    const correctAnswer = htmlEntities(props.correct_answer)
 
     const answeredStyle = {
         opacity: '0.5',
@@ -36,18 +37,19 @@ function Game(props){
         }
     }, [answerTrue])
 
-    function removeCharacters(question) {
-        return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
+    function htmlEntities(data) {
+        return decode(data)
+        // return question.replace(/(&quot\;)/g, "\"").replace(/(&rsquo\;)/g, "\"").replace(/(&#039\;)/g, "\'").replace(/(&amp\;)/g, "\"");
     }
 
     function combineAnswer(incorrectAnswers, correctAnswer) {
         let allAnswers = []
         incorrectAnswers.map(answer => allAnswers.push({
-            answer: removeCharacters(answer),
+            answer: htmlEntities(answer),
             active: false
         }))
         allAnswers.push({
-            answer: removeCharacters(correctAnswer),
+            answer: htmlEntities(correctAnswer),
             active: false
         })
         allAnswers.sort(() => Math.random() - 0.5);
@@ -63,7 +65,7 @@ function Game(props){
 
     return (
         <div className="question">
-            <h1>{removeCharacters(props.question)}</h1>
+            <h1>{htmlEntities(props.question)}</h1>
             <div className="answers">
                 {answerElem}
             </div>
