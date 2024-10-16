@@ -98,7 +98,7 @@ function App() {
       {svgTr}
       {svgBl}
       <div className='App-content' style={menu || loading ? menuStyle : null}>
-        {loading ? <h1 className='loader'></h1> :
+        {loading ? <div className='loader'></div> :
           menu ? 
             <MainMenu toggleGame={toggleGame} /> : gameElem}
       </div>

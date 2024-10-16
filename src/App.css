@@ -81,6 +81,7 @@ svg{
 .answers {
   margin: 15px 0;
   display: flex;
+  flex-wrap: wrap;
 }
 
 .answer {
@@ -109,7 +110,7 @@ svg{
   display: inline-block;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  margin: 13px 10px 4px 30px;
+  margin: auto 5px;
   cursor: pointer;
 }
 
@@ -147,6 +148,10 @@ svg{
   height: 200px;
   animation: spin 2s linear infinite;
   z-index: 3;
+}
+
+.question {
+  max-width: 75vwh
 }
 
 @keyframes spin {
